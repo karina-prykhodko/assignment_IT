@@ -23,7 +23,24 @@ if args.output is not None:
   args.output.writelines(f'{store[0]}\n')
 
 def medalist(file_name, country, year):
-  pass
+  medalists = []
+
+  with open(file_name) as file:
+    next_line = file.readline()
+
+    for line in file:
+      part = line.split('/t')
+      print(part)
+
+      medal = part[14].strip()
+      annum = int(part[9].strip())
+      team = part[6].strip()
+      noc = part[7].stip()
+      if medal != 'NA' and annum == year in (team, noc):
+        medalists.append(part)
+
+  return medalists
+
 
 def total_medals(medalist):
   pass 
