@@ -29,13 +29,14 @@ def medalist(file_name, country, year):
     next_line = file.readline()
 
     for line in file:
+
       part = line.split('/t')
-      print(part)
 
       medal = part[14].strip()
       annum = int(part[9].strip())
       team = part[6].strip()
       noc = part[7].stip()
+
       if medal != 'NA' and annum == year in (team, noc):
         medalists.append(part)
 
@@ -48,7 +49,7 @@ def total_medals(medalists):
   bronze = 0
 
   for each in medalists:
-    
+
     medal = each[14].stip()
 
     if medal == 'Gold':
@@ -60,8 +61,26 @@ def total_medals(medalists):
 
   return golg, silver, bronze
 
-def country_year(file_name, country, year):
-  pass 
+
+def check_valid_country_year(file_name, country, year):
+  country = False
+  year = False
+
+  with open(file_name) as file:
+    next_line = file.readline()
+
+    for line in file:
+      part = line.split('/t')
+      team = part[6].strip()
+      noc = part[7].stip()
+      annum = int(part[9].strip())
+
+      if country in (team, noc):
+        country = True
+      if year in annum:
+        year = True
+        
+  return country, year
 
 def first_ten(medalists):
   pass
