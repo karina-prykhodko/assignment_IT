@@ -22,6 +22,7 @@ with args.infile as file:
 if args.output is not None:
   args.output.writelines(f'{store[0]}\n')
 
+
 def medalist(file_name, country, year):
   medalists = []
 
@@ -87,5 +88,26 @@ def first_ten(medalists):
   ten = []
   for i in range(10):
     ten.append(f'{medalists[i][1]}-{medalists[i][12]}-{medalists[i][14]}'.strip())
-    
+
   return ten
+
+
+country, year = args.medals
+
+valid_country, valid_year = check_valid_country_year(args.infile, country, year )
+medalists = medalist(args.infile, country, year)
+golg, silver, bronze = total_medals(medalists)
+ten = first_ten(medalists)
+
+if valid_country == False:
+  print("This country doesn't exsist")
+  quit
+
+if valid_year == False:
+  print("In this year country didn't take part ")
+  quit
+
+if len(medalists) < 10:
+  print(f"In {country} in {year} less than 10 medalists")
+  quit
+
