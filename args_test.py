@@ -42,8 +42,23 @@ def medalist(file_name, country, year):
   return medalists
 
 
-def total_medals(medalist):
-  pass 
+def total_medals(medalists):
+  golg = 0
+  silver = 0
+  bronze = 0
+
+  for each in medalists:
+    
+    medal = each[14].stip()
+
+    if medal == 'Gold':
+      golg += 1
+    elif medal == 'Silwer':
+      silver += 1
+    elif medal == 'Bronze':
+      bronze += 1
+
+  return golg, silver, bronze
 
 def country_year(file_name, country, year):
   pass 
