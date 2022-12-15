@@ -79,8 +79,13 @@ def check_valid_country_year(file_name, country, year):
         country = True
       if year in annum:
         year = True
-        
+
   return country, year
 
+
 def first_ten(medalists):
-  pass
+  ten = []
+  for i in range(10):
+    ten.append(f'{medalists[i][1]}-{medalists[i][12]}-{medalists[i][14]}'.strip())
+    
+  return ten
