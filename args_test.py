@@ -40,6 +40,7 @@ def total_medals(medalists):
 
 def check_valid_country(country):
   valid_country = False
+  valid_year = False
   file = args.infile
   with open(file) as file:
         next_line = file.readline()
@@ -77,18 +78,19 @@ def first_ten(medalists):
 
 
 if args.medals is not None:
-  country, year = args.medals
-  valid_country = check_valid_country(country)
-  valid_year = check_valid_year(year)
+ country, year = args.medals
+ valid_country = check_valid_country(country)
+ valid_year = check_valid_year(year)
 
   if valid_country == False:
-      print("This country doesn't exsist")
-      exit()
+   print("This country doesn't exsist")
+  exit()
 
 
 if args.total is not None:
   year = args.total
   valid_year = check_valid_year(year)
+ 
  
   
 
@@ -97,15 +99,15 @@ if valid_year == False:
   exit()
 
 if args.medals is not None:
-    medalists = medalist(country, int(year))
+ medalists = medalist(country, int(year))
 
 if len(medalists) < 10:
   print(f"In {country} in {year} less than 10 medalists")
   exit()
 
 if args.medals is not None:
-    gold, silver, bronze = total_medals(medalists)
-    ten = first_ten(medalists)
+  gold, silver, bronze = total_medals(medalists)
+ten = first_ten(medalists)
 
 def store(ten, gold, silver, bronze):
     store = f"{ten}\n" \
@@ -115,7 +117,7 @@ def store(ten, gold, silver, bronze):
     return store
 
 if args.medals is not None:
-    store = store(ten, gold, silver, bronze)
+ store = store(ten, gold, silver, bronze)
 #print(store)
 
 if args.output is not None:
