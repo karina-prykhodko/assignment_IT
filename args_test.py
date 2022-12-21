@@ -4,7 +4,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('infile')
 parser.add_argument('-medals', dest='medals', nargs=2)
 parser.add_argument('-output', '--output', type=argparse.FileType('w', encoding='UTF-8'))
-
+parser.add_argument('-total' , dest='total', nargs=1 )
 args = parser.parse_args()
 
 def medalist(country, year):
@@ -65,8 +65,17 @@ def first_ten(medalists):
   return ten
 
 
-country, year = args.medals
+
+
+if args.medals is not None:
+  country, year = args.medals
+  
+if args.total is not None:
+  country, year = args.total
+
 valid_country, valid_year = check_valid_country_year(country, year)
+ 
+  
 
 if valid_country == False :
   print("This country doesn't exsist")
@@ -94,7 +103,45 @@ def store(ten, gold, silver, bronze):
 
 
 store = store(ten, gold, silver, bronze)
-print(store)
+#print(store)
 
 if args.output is not None:
   args.output.writelines(f'{store}\n')
+
+
+
+def total(year):
+  totalInfo = dict()
+  sorted_totalInfo = dict()
+  with open(args.infile,'r') as file:
+        next_line = file.readline()
+
+        for line in file:
+            part = line.split('\t')
+            team = part[6].strip()
+            annum = part[9].strip()
+            medal = part[14].strip()
+            if annum == year and  medal != 'NA':
+              if team in totalInfo and medal in totalInfo[team]:
+                totalInfo[team][medal] += 1
+              else:
+                totalInfo[team][medal] = 1
+                sorted_totalInfo[team] += 1
+            else:
+              totalInfo[team]=dict()
+              totalInfo[team][medal] = 1
+              sorted_totalInfo[team] = 1
+                        
+                           
+                        
+            line = file.readline()
+
+        for countryName, results in totalInfo.items():
+          print(f'{countryName}')
+        for medal, count in results.items():
+          print(f'\t{medal} - {count}')
+
+
+A = total(year)
+print(A)
+
