@@ -82,14 +82,14 @@ if args.medals is not None:
  valid_country = check_valid_country(country)
  valid_year = check_valid_year(year)
 
-  if valid_country == False:
-   print("This country doesn't exsist")
+ if valid_country == False:
+  print("This country doesn't exsist")
   exit()
 
 
-if args.total is not None:
-  year = args.total
-  valid_year = check_valid_year(year)
+ if args.total is not None:
+   year = args.total
+   valid_year = check_valid_year(year)
  
  
   
