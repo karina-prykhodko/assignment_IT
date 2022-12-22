@@ -5,6 +5,7 @@ parser.add_argument('infile')
 parser.add_argument('-medals', dest='medals', nargs=2)
 parser.add_argument('-output', '--output', type=argparse.FileType('w', encoding='UTF-8'))
 parser.add_argument('-total' , dest='total', nargs=1 )
+parser.add_argument('-overall',dest='overall', nargs='+')
 args = parser.parse_args()
 
 def medalist(country, year):
@@ -89,25 +90,25 @@ if args.medals is not None:
 
  if args.total is not None:
    year = args.total
-   valid_year = check_valid_year(year)
+   # valid_year = check_valid_year(year)
  
  
   
-
-if valid_year == False:
-  print("In this year country didn't take part ")
-  exit()
+#
+# if valid_year == False:
+#   print("In this year country didn't take part ")
+#   exit()
 
 if args.medals is not None:
  medalists = medalist(country, int(year))
-
-if len(medalists) < 10:
-  print(f"In {country} in {year} less than 10 medalists")
-  exit()
+#
+# if len(medalists) < 10:
+#   print(f"In {country} in {year} less than 10 medalists")
+#   exit()
 
 if args.medals is not None:
   gold, silver, bronze = total_medals(medalists)
-ten = first_ten(medalists)
+  ten = first_ten(medalists)
 
 def store(ten, gold, silver, bronze):
     store = f"{ten}\n" \
@@ -118,7 +119,7 @@ def store(ten, gold, silver, bronze):
 
 if args.medals is not None:
  store = store(ten, gold, silver, bronze)
-#print(store)
+ print(store)
 
 if args.output is not None:
   args.output.writelines(f'{store}\n')
@@ -148,3 +149,29 @@ if args.total is not None:
         print(a)
         for y in country_in_this_year[a]:
             print(y, ':', country_in_this_year[a][y])
+
+
+def overall(countries_list):
+    first_line = True
+    for country in countries_list:
+        results = {}
+        with open(args.infile, "r") as file:
+            for line in file:
+                part = line.split('\t')
+                team = part[6].strip()
+                annum = part[9].strip()
+                medal = part[14].strip()
+                if first_line:
+                    first_line = False
+                    continue
+                if country == team and medal != "NA":
+                    if annum not in results:
+                        results[annum] = 1
+                    else:
+                        results[annum] += 1
+            print(country, max(results, key=results.get), max(results.values()))
+
+
+if args.overall is not None:
+  countries_list = args.overall
+  countries_list_result = overall(countries_list)
