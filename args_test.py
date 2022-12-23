@@ -13,8 +13,7 @@ args = parser.parse_args()
 #task 1
 def medalist(country, year):
   medalists = []
-  file = args.infile
-  with open(file , 'r') as file:
+  with open(args.infile , 'r') as file:
     next_line = file.readline()
     for line in file:
       part = line.split('\t')
@@ -44,7 +43,7 @@ def total_medals(medalists):
 
 def check_valid_country(country):
   valid_country = False
-  with open(args.infile) as file:
+  with open(args.infile , 'r') as file:
         next_line = file.readline()
         for line in file:
             part = line.split('\t')
@@ -58,7 +57,7 @@ def check_valid_country(country):
 
 
 def check_valid_year(year):
-    with open(args.infile) as file:
+    with open(args.infile, 'r') as file:
         next_line = file.readline()
         for line in file:
             part = line.split('\t')
@@ -84,26 +83,28 @@ def store(ten, gold, silver, bronze):
 
 
 if args.medals is not None:
- country, year = args.medals
- valid_country = check_valid_country(country)
- valid_year = check_valid_year(year)
+    country, year = args.medals
+    valid_country = check_valid_country(country)
+    valid_year = check_valid_year(year)
 
- if valid_country == False:
-  print("This country doesn't exsist")
-  exit()
+    if valid_country == False:
+        print("This country doesn't exsist")
+        exit()
 
-if valid_year == False:
-  print("In this year country didn't take part ")
-  exit()
+    if valid_year == False:
+        print("In this year country didn't take part ")
+        exit()
 
-medalists = medalist(country, int(year))
- gold, silver, bronze = total_medals(medalists)
- ten = first_ten(medalists)
- store = store(ten, gold, silver, bronze)
- print(store)
-if len(medalists) < 10:
-  print(f"In {country} in {year} less than 10 medalists")
-  exit()
+    medalists = medalist(country, int(year))
+
+    if len(medalists) < 10:
+        print(f"In {country} in {year} less than 10 medalists")
+        exit()
+
+    gold, silver, bronze = total_medals(medalists)
+    ten = first_ten(medalists)
+    store = store(ten, gold, silver, bronze)
+    print(store)
 
 
 if args.output is not None:
