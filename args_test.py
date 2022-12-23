@@ -1,5 +1,5 @@
 import argparse
-from statistics import mean
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('infile')
@@ -38,7 +38,7 @@ def total_medals(medalists):
       silver += 1
     elif medal == 'Bronze':
       bronze += 1
-  return gold, silver, bronze
+  return bronze, silver, gold
 
 
 def check_valid_country(country):
@@ -76,9 +76,9 @@ def first_ten(medalists):
 
 def store(ten, gold, silver, bronze):
     store = f"{ten}\n" \
-            f" Gold medals - {gold}\n " \
+            f" Bronze medals - {bronze}\n " \
             f"Silver medals - {silver}\n " \
-            f"Bronze medals - {bronze}"
+            f"Gold medals - {gold}"
     return store
 
 
